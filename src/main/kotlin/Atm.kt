@@ -20,7 +20,7 @@ class Atm {
         }
     }
 
-    private fun processCommand(input: List<String>, specs: HashMap<String, CommandSpec>) {
+    fun processCommand(input: List<String>, specs: HashMap<String, CommandSpec>) {
         if (input.isEmpty()) {
             println(COMMAND_ERROR_MESSAGE)
         } else {
@@ -41,14 +41,14 @@ class Atm {
         }
     }
 
-    private fun login(input: List<String>) {
+    fun login(input: List<String>) {
         currentCustomer = input[1]
         val loginAccountInfo = customers.getOrPut(currentCustomer) { AccountInfo() }
         println(LOGIN_WELCOME_MESSAGE.format(currentCustomer, loginAccountInfo.balance))
         customers[currentCustomer]?.printAccountInfo()
     }
 
-    private fun deposit(input: List<String>) {
+    fun deposit(input: List<String>) {
         val amount = input[1].toLongOrNull()
 
         if (amount != null && amount > 0) {
@@ -65,7 +65,7 @@ class Atm {
         }
     }
 
-    private fun withdraw(input: List<String>) {
+    fun withdraw(input: List<String>) {
         val amount = input[1].toLongOrNull()
         if (amount != null && amount > 0) {
             withCurrentCustomer {
@@ -81,7 +81,7 @@ class Atm {
         }
     }
 
-    private fun transfer(input: List<String>) {
+    fun transfer(input: List<String>) {
         val target = input[1]
         val amount = input[2].toLongOrNull()
 
@@ -110,7 +110,7 @@ class Atm {
         }
     }
 
-    private fun processSufficientBalance(
+    fun processSufficientBalance(
         sender: AccountInfo,
         receiver: AccountInfo,
         amount: Long,
@@ -137,7 +137,7 @@ class Atm {
         }
     }
 
-    private fun processUnsufficientBalance(
+    fun processUnsufficientBalance(
         sender: AccountInfo,
         receiver: AccountInfo,
         amount: Long,
@@ -156,7 +156,7 @@ class Atm {
         return transferredAmount
     }
 
-    private fun logout(input: List<String>) {
+    fun logout(input: List<String>) {
         if (currentCustomer.isEmpty()) {
             println(LOGOUT_ERROR_MESSAGE)
         } else {
@@ -165,7 +165,7 @@ class Atm {
         }
     }
 
-    private fun payDebts(depositAmount: Long) {
+    fun payDebts(depositAmount: Long) {
         withCurrentCustomer {
             var remainingAmount = depositAmount
             for ((name, debtAmount) in debts) {
@@ -182,13 +182,13 @@ class Atm {
         }
     }
 
-    private fun withCurrentCustomer(function: AccountInfo.() -> Unit) {
+    fun withCurrentCustomer(function: AccountInfo.() -> Unit) {
         withUserByName(currentCustomer) {
             function()
         }
     }
 
-    private fun withUserByName(name: String, function: AccountInfo.() -> Unit) {
+    fun withUserByName(name: String, function: AccountInfo.() -> Unit) {
         customers[name]?.also { customer ->
             customer.function()
             customers[name] = customer
