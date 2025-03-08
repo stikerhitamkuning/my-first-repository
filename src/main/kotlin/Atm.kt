@@ -3,9 +3,9 @@ import kotlin.math.min
 class Atm {
 
     private val customers = mutableMapOf<String, AccountInfo>()
-    private var currentCustomer: String = ""
+    var currentCustomer: String = ""
 
-    private val commandSpecs = hashMapOf(
+    val commandSpecs = hashMapOf(
         LOGIN_COMMAND to CommandSpec(LOGIN_INPUT_SIZE, false, ::login),
         LOGOUT_COMMAND to CommandSpec(LOGOUT_INPUT_SIZE, true, ::logout),
         WITHDRAW_COMMAND to CommandSpec(WITHDRAW_INPUT_SIZE, true, ::withdraw),
